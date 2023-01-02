@@ -180,9 +180,9 @@ fn main() -> io::Result<()> {
         };
     }
 
-    for i in 0..sec_star.len() {
-        println!("This folders {}", sec_star[i]);
-    }
+    // for i in 0..sec_star.len() {
+    //     println!("This folders {}", sec_star[i]);
+    // }
 
     let mut small: Vec<String> = Vec::new();
     let mut small_s: Vec<i32> = Vec::new();
@@ -238,41 +238,41 @@ fn main() -> io::Result<()> {
             println!("{} {}", better_1[i], fir_pp[i]);
         } 
     }
-    println!("Second");
-    let better_2 = mem_combine(sec_ppp, sec_sss);
-    for i in 0..better_2.len() {
-        if (better_2[i] < toohigh) && (better_2[i] > 0) {
-            println!("{} {}", better_2[i], sec_pp[i]);
-        } 
-    }
-    println!("Third");
-    let better_3 = mem_combine(thr_ppp, thr_sss);
-    for i in 0..better_3.len() {
-        if (better_3[i] < toohigh) && (better_3[i] > 0) {
-            println!("{} {}", better_3[i], thr_pp[i]);
-        } 
-    }
-    println!("First");
+    // println!("Second");
+    // let better_2 = mem_combine(sec_ppp, sec_sss);
+    // for i in 0..better_2.len() {
+    //     if (better_2[i] < toohigh) && (better_2[i] > 0) {
+    //         println!("{} {}", better_2[i], sec_pp[i]);
+    //     } 
+    // }
+    // println!("Third");
+    // let better_3 = mem_combine(thr_ppp, thr_sss);
+    // for i in 0..better_3.len() {
+    //     if (better_3[i] < toohigh) && (better_3[i] > 0) {
+    //         println!("{} {}", better_3[i], thr_pp[i]);
+    //     } 
+    // }
+    // println!("Fourth");
 
-    for i in 0..fou_ss.len() {
-        if fou_ss[i] < toohigh {
-            println!("{} {}", fou_ss[i], fou_pp[i]);
-        } 
-    }
-    println!("First");
+    // for i in 0..fou_ss.len() {
+    //     if fou_ss[i] < toohigh {
+    //         println!("{} {}", fou_ss[i], fou_pp[i]);
+    //     } 
+    // }
+    // println!("Fifth");
 
-    for i in 0..fiv_ss.len() {
-        if fiv_ss[i] < toohigh {
-            println!("{} {}", fiv_ss[i], fiv_pp[i]);
-        } 
-    }
-    println!("First");
+    // for i in 0..fiv_ss.len() {
+    //     if fiv_ss[i] < toohigh {
+    //         println!("{} {}", fiv_ss[i], fiv_pp[i]);
+    //     } 
+    // }
+    // println!("Sixth");
 
-    for i in 0..six_ss.len() {
-        if six_ss[i] < toohigh {
-            println!("{} {}", six_ss[i], six_pp[i]);
-        } 
-    }
+    // for i in 0..six_ss.len() {
+    //     if six_ss[i] < toohigh {
+    //         println!("{} {}", six_ss[i], six_pp[i]);
+    //     } 
+    // }
     // sec_star_s.sort();
     // println!("{:?}", sec_star_s);
     
@@ -419,4 +419,48 @@ fn mem_layout(memp: Vec<String>, mems: Vec<i32>) -> (Vec<String>, Vec<i32>) {
     }
     let (outer_p, outer_s) = mem_clean(layer);
     (outer_p, outer_s)
+}
+
+pub fn longest_common_prefix(strs: Vec<String>) -> String {
+  // empty vector input case
+  if strs.len() == 0 {
+    return String::new();
+  } else if strs.len() == 1 {
+    // only one String in vector
+    return strs[0].clone();
+  }
+
+  // Pick an arbitrary word, I chose the first word
+  let base = &strs[0];
+
+  // declare tracking vars to walk through the vector and track best match
+  let mut sub_string = String::new();
+  let mut best_match = String::new();
+
+  for char in base.chars() {
+    // grow the sub_string one character at a time
+    sub_string.push(char);
+
+    // look for the sub_string in all the other words, skipping the first word
+    for word in &strs[1..] {
+      if word.contains(&sub_string) {
+        // if you find the substring in the word
+        // if substring is longer than current best match
+        if sub_string.len() > best_match.len() {
+          // update best match
+          best_match = String::from(&sub_string);
+        }
+      } else {
+        // found a substring that is not in all the words
+        if sub_string.len() == best_match.len() && sub_string.contains(&best_match) {
+          best_match.pop();
+        }
+        // clear out the substring
+        sub_string.clear();
+        break;
+      }
+    }
+  }
+  // return the best found substring
+  best_match
 }
